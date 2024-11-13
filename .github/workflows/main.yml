@@ -1,19 +1,38 @@
-name: Deploy Netlify Site
+name: Auto Deploy to Netlify
 
-on:
-  push:
-    branches: [main]
+on: 
+  push: 
+    branches: ["main"] 
+  workflow_dispatch: 
 
-jobs:
-  build:
+jobs: 
+  auto-deploy: 
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+    steps: 
+      - name: Checkout the repository
+        uses: actions/checkout@v3 
+
+      - name: Install Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '16'
+          python-version: '3.11'
 
-      - name: "Deploy to Netlify"
-        run: curl -X POST -d {} ${{ secrets.NETLIFY_AUTH_TOKEN}}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Testing the project
+        run: python -m unittest discover
+
+      - name: Build the project
+        run: flask build  # Replace with your project's specific build command
+
+      - name: Publish
+        uses: netlify/actions/cli@master 
+        with: 
+          args: deploy --dir=build --prod 
+        env: 
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }} 
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }} 
