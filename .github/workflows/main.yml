@@ -16,4 +16,4 @@ jobs:
           node-version: '16'
 
       - name: "Deploy to Netlify"
-        run: curl -X POST -d {} ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: curl -X POST -d {} ${{ secrets.NETLIFY_AUTH_TOKEN}}
