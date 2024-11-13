@@ -67,3 +67,20 @@ h2 {
   font-size: 10px;
   color: darkgray;
 }
+
+.login-page {
+  background-color: #222;
+  color: #fff;
+}
+
+.login-page h2 {
+  font-size: 24px; 
+}
+
+.login-page .input-field {
+  font-size: 18px;
+}
+
+.login-page .input-field input {
+  text-align: center;
+}
