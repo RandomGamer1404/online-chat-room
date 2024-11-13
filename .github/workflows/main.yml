@@ -27,7 +27,13 @@ jobs:
         run: python -m unittest discover
 
       - name: Build the project
-        run: flask build  # Replace with your project's specific build command
+        run: flask build 
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
 
       - name: Publish
         uses: netlify/actions/cli@master 
